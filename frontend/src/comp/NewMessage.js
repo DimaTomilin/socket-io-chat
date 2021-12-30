@@ -1,26 +1,13 @@
 import React, { useRef } from 'react';
-import axios from 'axios';
 
-export default function NewMessage() {
+export default function NewMessage({ socket, setMessages }) {
   const MessageEle = useRef(null);
 
-  const clickHandler = async () => {
-    console.log('start');
+  const clickHandler = () => {
     const content = MessageEle.current.value;
     MessageEle.current.value = '';
-    try {
-      await axios.post(
-        'http://localhost:8080/api/message',
-        {
-          content,
-        },
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        }
-      );
-    } catch (error) {
-      return alert(`Error ${error.response.status}. ${error.response.data}`);
-    }
+    setMessages((prev) => [...prev, { name: 'dima', content }]);
+    socket.current.emit('message', { name: 'dima', content });
   };
 
   return (
@@ -30,7 +17,7 @@ export default function NewMessage() {
         className="message-text"
         placeholder="New message"
       />
-      <button className="btn send-btn" onClick={() => clickHandler()}>
+      <button className="btn send-btn" onClick={clickHandler}>
         Send
       </button>
     </div>
