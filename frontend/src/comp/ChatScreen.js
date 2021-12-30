@@ -4,7 +4,6 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import '../styles/chatStyles.scss';
-import logout from '../helpers/logout';
 
 export default function ChatScreen() {
   const [currentUsers, setCurrentUsers] = useState([]);
@@ -75,7 +74,6 @@ export default function ChatScreen() {
       console.log('received stream', data);
     };
     source.onclose = function () {
-      logout();
       console.log('connection to stream has been closed');
     };
   }, []);

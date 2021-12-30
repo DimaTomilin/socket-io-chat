@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
-import { alert } from '../helpers/alerts';
 
 export default function NewMessage() {
   const MessageEle = useRef(null);
