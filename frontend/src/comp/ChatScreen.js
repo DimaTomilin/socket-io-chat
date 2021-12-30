@@ -31,8 +31,21 @@ export default function ChatScreen() {
       });
     });
 
+    socketRef.current.on('userDisconnect', ({ name, content }) => {
+      setMessages((prevState) => {
+        return [...prevState, { content }];
+      });
+      setUsers((prevState) => {
+        const newUsers = prevState.filter((user) => user.name !== name);
+        return [...newUsers];
+      });
+    });
+
     socketRef.current.on('newUser', ({ newUser }) => {
-      console.log('newUser');
+      setMessages((prevState) => [
+        ...prevState,
+        { content: `${newUser.name} connected to chat` },
+      ]);
       setUsers((prevState) => {
         return [...prevState, { ...newUser }];
       });
