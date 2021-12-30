@@ -1,17 +1,27 @@
 const app = require('express')();
 const http = require('http').createServer(app);
+const cors = require('cors');
 const io = require('socket.io')(http, {
   cors: {
     origin: ['http://localhost:3000'],
   },
 });
 
-const currentUsers = [];
+let currentUsers = [];
+
+app.use(cors);
+app.get('/allUsers', (req, res) => {
+  console.log('i am here');
+  res.send(currentUsers);
+});
 
 io.on('connection', (socket) => {
-  console.log('new connection', socket.id);
-  currentUsers.push(socket.handshake.query.name);
-  console.log(currentUsers);
+  const name = socket.handshake.query.name;
+  console.log('new connection', socket.id, 'with name ', name);
+  const newUser = { name, id: socket.id };
+  currentUsers.push(newUser);
+  socket.emit('allUsers', { currentUsers });
+  socket.broadcast.emit('newUser', { newUser });
 
   socket.on('message', ({ name, content }) => {
     console.log('new message from ', name, 'with ', content);
@@ -19,7 +29,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    socket.emit('messageBack', { name: 'wow', message: 'render' });
+    console.log('disconnect');
+    currentUsers = currentUsers.filter((user) => user.name !== name);
+    console.log(currentUsers);
+    socket.broadcast.emit('messageBack', {
+      name,
+      content: `${name} disconnect`,
+    });
   });
 });
 

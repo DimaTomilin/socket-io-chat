@@ -1,12 +1,12 @@
 import React from 'react';
 import User from './User';
 
-export default function UsersArea() {
+export default function UsersArea({ users }) {
   return (
     <div className="users-list">
-      {/* {currentUsers.map((user) => {
-        return <User user={user} key={user.username} />;
-      })} */}
+      {users.map((user) => {
+        return <User user={user.name} key={user.id} />;
+      })}
     </div>
   );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ChatScreen from './comp/ChatScreen';
-// import SignIn from './comp/SignIn';
+import Authentication from './comp/LoginPage/Authentication';
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<SignIn />} /> */}
-        <Route path="/" element={<ChatScreen />} />
+        <Route path="/" element={<Authentication />} />
+        <Route path="/chat" element={<ChatScreen />} />
       </Routes>
     </Router>
   );
