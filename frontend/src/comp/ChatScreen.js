@@ -60,7 +60,7 @@ export default function ChatScreen() {
 
   return (
     <div className="chat-page">
-      <Header />
+      <Header socket={socketRef} />
       <Main
         messages={messages}
         socket={socketRef}
