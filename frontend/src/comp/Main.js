@@ -15,7 +15,11 @@ export default function Main({
     <div className="main">
       <div className="upper-part">
         <Chat messages={messages} />
-        <UsersArea users={users} setPrivateReceiver={setPrivateReceiver} />
+        <UsersArea
+          users={users}
+          setPrivateReceiver={setPrivateReceiver}
+          privateReceiver={privateReceiver}
+        />
       </div>
       <NewMessage
         socket={socket}
