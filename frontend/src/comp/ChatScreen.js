@@ -8,6 +8,7 @@ import io from 'socket.io-client';
 export default function ChatScreen() {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [privateReceiver, setPrivateReceiver] = useState('');
   const socketRef = useRef();
 
   useEffect(() => {
@@ -65,6 +66,8 @@ export default function ChatScreen() {
         socket={socketRef}
         users={users}
         setMessages={setMessages}
+        privateReceiver={privateReceiver}
+        setPrivateReceiver={setPrivateReceiver}
       />
       <Footer />
     </div>

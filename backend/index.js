@@ -23,7 +23,11 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('newUser', { newUser });
 
   socket.on('message', ({ name, content }) => {
-    socket.broadcast.emit('messageBack', { name, content });
+    socket.broadcast.emit('messageBack', { name, content, private: false });
+  });
+
+  socket.on('privateMessage', ({ name, content, toId }) => {
+    io.to(toId).emit('messageBack', { name, content, private: true });
   });
 
   socket.on('disconnect', () => {
