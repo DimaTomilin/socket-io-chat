@@ -12,8 +12,10 @@ export default function Header({ socket }) {
 
   return (
     <div className="header">
-      <h1>DimChat</h1>
-      <button className="btn logOut-btn" onClick={clickHandle}>
+      <h1>
+        <i>DimChat</i>
+      </h1>
+      <button className="logOut-btn" onClick={clickHandle}>
         Log out
       </button>
     </div>

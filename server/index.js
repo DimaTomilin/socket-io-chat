@@ -11,7 +11,6 @@ let currentUsers = [];
 
 app.use(cors);
 app.get('/allUsers', (req, res) => {
-  console.log('i am here');
   res.send(currentUsers);
 });
 

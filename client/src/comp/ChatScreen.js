@@ -6,15 +6,15 @@ import '../styles/chatStyles.scss';
 import io from 'socket.io-client';
 
 export default function ChatScreen() {
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('user'));
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [privateReceiver, setPrivateReceiver] = useState('');
   const socketRef = useRef();
 
   useEffect(() => {
-    console.log('here');
     socketRef.current = io.connect('http://localhost:8080', {
-      query: { name: localStorage.getItem('user') },
+      query: { name: currentUser },
     });
 
     socketRef.current.on('messageBack', ({ name, content }) => {
@@ -61,6 +61,7 @@ export default function ChatScreen() {
   return (
     <div className="chat-page">
       <Header socket={socketRef} />
+      <hr />
       <Main
         messages={messages}
         socket={socketRef}
@@ -68,7 +69,9 @@ export default function ChatScreen() {
         setMessages={setMessages}
         privateReceiver={privateReceiver}
         setPrivateReceiver={setPrivateReceiver}
+        currentUser={currentUser}
       />
+      <hr />
       <Footer />
     </div>
   );

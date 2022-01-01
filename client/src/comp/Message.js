@@ -1,12 +1,14 @@
 import React from 'react';
 
 export default function Message({ message }) {
-  // const time = new Date(message.time);
+  console.log(message);
+  const time = new Date();
 
   return (
     <div className="message">
-      {message.content}
-      {/* {time.toLocaleString()} */}
+      <div className="message-sender">{message.name}</div>
+      <div className="message-content">{message.content}</div>
+      <div className="message-time">{time.toLocaleString()}</div>
     </div>
   );
 }

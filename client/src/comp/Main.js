@@ -10,6 +10,7 @@ export default function Main({
   users,
   setPrivateReceiver,
   privateReceiver,
+  currentUser,
 }) {
   return (
     <div className="main">
@@ -26,6 +27,7 @@ export default function Main({
         setMessages={setMessages}
         setPrivateReceiver={setPrivateReceiver}
         privateReceiver={privateReceiver}
+        name={currentUser}
       />
     </div>
   );

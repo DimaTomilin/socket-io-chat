@@ -5,26 +5,23 @@ export default function NewMessage({
   setMessages,
   privateReceiver,
   setPrivateReceiver,
+  name,
 }) {
   const MessageEle = useRef(null);
-  console.log(privateReceiver);
 
   const sendMessage = () => {
     const content = MessageEle.current.value;
     MessageEle.current.value = '';
     if (privateReceiver) {
-      setMessages((prev) => [
-        ...prev,
-        { name: 'dima', content, private: true },
-      ]);
+      setMessages((prev) => [...prev, { name, content, private: true }]);
       socket.current.emit('privateMessage', {
-        name: 'dima',
+        name,
         content,
         toId: privateReceiver,
       });
     } else {
-      setMessages((prev) => [...prev, { name: 'dima', content }]);
-      socket.current.emit('message', { name: 'dima', content });
+      setMessages((prev) => [...prev, { name, content }]);
+      socket.current.emit('message', { name, content });
     }
   };
 
@@ -32,22 +29,22 @@ export default function NewMessage({
     const content = MessageEle.current.value;
     MessageEle.current.value = '';
     setPrivateReceiver('');
-    setMessages((prev) => [...prev, { name: 'dima', content }]);
-    socket.current.emit('message', { name: 'dima', content });
+    setMessages((prev) => [...prev, { name, content }]);
+    socket.current.emit('message', { name, content });
   };
 
   return (
-    <div className="message-area">
+    <div className="new-message-area">
       <textarea
         ref={MessageEle}
-        className="message-text"
+        className="new-message-text"
         placeholder="New message"
       />
-      <button className="btn send-btn" onClick={sendMessage}>
+      <button className="send-btn" onClick={sendMessage}>
         Send
       </button>
       {privateReceiver ? (
-        <button className="btn send-btn" onClick={deletePrivateAndSend}>
+        <button className="send-btn" onClick={deletePrivateAndSend}>
           To All
         </button>
       ) : null}
