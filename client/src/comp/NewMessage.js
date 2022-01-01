@@ -14,7 +14,7 @@ export default function NewMessage({
     MessageEle.current.value = '';
     if (privateReceiver) {
       setMessages((prev) => [...prev, { name, content, private: true }]);
-      socket.current.emit('privateMessage', {
+      socket.current.emit('message', {
         name,
         content,
         toId: privateReceiver,
@@ -33,12 +33,24 @@ export default function NewMessage({
     socket.current.emit('message', { name, content });
   };
 
+  const changeHandle = () => {
+    if (privateReceiver) {
+      socket.current.emit('typing', {
+        name,
+        toId: privateReceiver,
+      });
+    } else {
+      socket.current.emit('typing', { name });
+    }
+  };
+
   return (
     <div className="new-message-area">
       <textarea
         ref={MessageEle}
         className="new-message-text"
         placeholder="New message"
+        onChange={changeHandle}
       />
       <button className="send-btn" onClick={sendMessage}>
         Send

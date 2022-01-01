@@ -17,15 +17,28 @@ export default function ChatScreen() {
       query: { name: currentUser },
     });
 
-    socketRef.current.on('messageBack', ({ name, content }) => {
-      console.log({ name, content });
+    socketRef.current.on('messageBack', (message) => {
       setMessages((prevState) => {
-        return [...prevState, { name, content }];
+        const newState = prevState.slice(0, prevState.length - 1);
+        return [...newState, { ...message }];
+      });
+    });
+
+    socketRef.current.on('typingBack', (message) => {
+      setMessages((prevState) => {
+        if (prevState.length === 0) {
+          return [...prevState, { ...message }];
+        } else if (
+          prevState[prevState.length - 1].content.includes('is typing...')
+        ) {
+          return [...prevState];
+        } else {
+          return [...prevState, { ...message }];
+        }
       });
     });
 
     socketRef.current.on('allUsers', ({ currentUsers }) => {
-      console.log('allUsers');
       setUsers((prevState) => {
         const allUsers = prevState.concat(currentUsers);
         return [...allUsers];
@@ -60,7 +73,7 @@ export default function ChatScreen() {
 
   return (
     <div className="chat-page">
-      <Header socket={socketRef} />
+      <Header socket={socketRef} currentUser={currentUser} />
       <hr />
       <Main
         messages={messages}

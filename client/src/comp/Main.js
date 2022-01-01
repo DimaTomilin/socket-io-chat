@@ -20,6 +20,7 @@ export default function Main({
           users={users}
           setPrivateReceiver={setPrivateReceiver}
           privateReceiver={privateReceiver}
+          currentUser={currentUser}
         />
       </div>
       <NewMessage

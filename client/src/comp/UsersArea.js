@@ -5,6 +5,7 @@ export default function UsersArea({
   users,
   setPrivateReceiver,
   privateReceiver,
+  currentUser,
 }) {
   return (
     <div className="users-list">
@@ -15,6 +16,7 @@ export default function UsersArea({
             setPrivateReceiver={setPrivateReceiver}
             privateReceiver={privateReceiver}
             key={user.id}
+            currentUser={currentUser}
           />
         );
       })}
