@@ -6,7 +6,7 @@ import '../styles/chatStyles.scss';
 import io from 'socket.io-client';
 
 export default function ChatScreen() {
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem('user'));
+  const [currentUser] = useState(localStorage.getItem('user'));
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [privateReceiver, setPrivateReceiver] = useState('');

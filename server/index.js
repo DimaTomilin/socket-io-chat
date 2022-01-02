@@ -33,15 +33,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('typing', ({ name, toId }) => {
-    console.log('typing');
     if (toId) {
-      console.log('typing private');
       io.to(toId).emit('typingBack', {
         content: `${name} is typing...`,
         private: true,
       });
     } else {
-      console.log('typing public');
       socket.broadcast.emit('typingBack', {
         content: `${name} is typing...`,
         private: false,
